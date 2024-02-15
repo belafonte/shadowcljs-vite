@@ -1,0 +1,22 @@
+{
+  "name": "shadow-vite-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "shadow-dev": "npx shadow-cljs watch frontend",
+    "vite-dev": "vite",
+    "vite-build": "vite build",
+    "vite-preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "shadow-cljs": "2.22.10",
+    "tailwindcss": "^3.3.1",
+    "vite": "^4.2.1"
+  }
+}
