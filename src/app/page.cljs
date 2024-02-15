@@ -1,4 +1,4 @@
-(ns app.main
+(ns app.page
   (:require [reagent.core :as r]
             ["react-dom/client" :refer [createRoot]]))
 
@@ -6,7 +6,7 @@
 
 (defn app-view []
   [:div
-   [:h1.text-2xl "Tailwind heading"]])
+   [:h1.text-2xl.text-amber-500 "Tailwind heading"]])
 
 (defn ^:dev/after-load render []
   (.render root (r/as-element [app-view])))

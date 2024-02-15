@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "shadow-dev": "npx shadow-cljs watch frontend",
+    "shadow-dev": "npx shadow-cljs watch app",
     "vite-dev": "vite",
     "vite-build": "vite build",
     "vite-preview": "vite preview"
