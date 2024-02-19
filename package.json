@@ -2,6 +2,7 @@
   "name": "shadow-vite-app",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "shadow-dev": "npx shadow-cljs watch app",
     "vite-dev": "vite",
@@ -9,6 +10,7 @@
     "vite-preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.21.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -17,6 +19,6 @@
     "postcss": "^8.4.21",
     "shadow-cljs": "2.22.10",
     "tailwindcss": "^3.3.1",
-    "vite": "^4.2.1"
+    "vite": "^5.1.3"
   }
 }
