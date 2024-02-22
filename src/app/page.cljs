@@ -20,9 +20,6 @@
       {:on-click #(set-count inc)}
       "Click"]]))
 
-;; (defn root []
-;;   [:div
-;;    [:f> example]])
 (defn app-view []
   [:> react-query/QueryClientProvider {:client query-client}
    [:div
