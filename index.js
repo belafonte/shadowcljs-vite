@@ -1,6 +1,7 @@
 import * as i0 from "react";
 import * as i1 from "react-dom/client";
 import * as i2 from "@tanstack/react-query";
+import * as i3 from "flowbite-react";
 
 const ALL = {};
 
@@ -18,3 +19,5 @@ ALL["react"] = i0;
 ALL["react-dom/client"] = i1;
 
 ALL["@tanstack/react-query"] = i2;
+
+ALL["flowbite-react"] = i3;
