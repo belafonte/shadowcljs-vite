@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "ui:compile": "babel src/components/ui -d src/components/ui",
     "shadow-dev": "npx shadow-cljs watch app",
-    "vite-dev": "vite",
+    "vite-dev": "npm run ui:compile && vite",
     "vite-build": "vite build",
     "vite-preview": "vite preview"
   },
@@ -25,6 +26,7 @@
     "@babel/core": "^7.24.3",
     "@babel/preset-react": "^7.24.1",
     "autoprefixer": "^10.4.14",
+    "babel-plugin-transform-imports": "^2.0.0",
     "postcss": "^8.4.21",
     "shadow-cljs": "2.22.10",
     "tailwindcss": "^3.3.1",

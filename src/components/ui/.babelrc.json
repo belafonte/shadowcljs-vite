@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "@babel/preset-react"
+  ],
+  "ignore": [
+    "**/*.test.js"
+  ],
+  "plugins": [
+    "transform-imports"
+  ],
+  "comments": false
+}

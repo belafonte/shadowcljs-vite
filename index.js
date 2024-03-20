@@ -1,6 +1,10 @@
 import * as i0 from "react";
 import * as i1 from "react-dom/client";
 import * as i2 from "@tanstack/react-query";
+import * as i3 from "@radix-ui/react-slot";
+import * as i4 from "class-variance-authority";
+import * as i5 from "clsx";
+import * as i6 from "tailwind-merge";
 
 const ALL = {};
 
@@ -18,3 +22,11 @@ ALL["react"] = i0;
 ALL["react-dom/client"] = i1;
 
 ALL["@tanstack/react-query"] = i2;
+
+ALL["@radix-ui/react-slot"] = i3;
+
+ALL["class-variance-authority"] = i4;
+
+ALL["clsx"] = i5;
+
+ALL["tailwind-merge"] = i6;
