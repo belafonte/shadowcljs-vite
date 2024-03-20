@@ -2,8 +2,8 @@
   (:require [reagent.core :as r]
             ["react-dom/client" :refer [createRoot]]
             [react :as react]
-            ["@tanstack/react-query" :as react-query]
-            [app.routes :as routes]))
+            ["@tanstack/react-query" :as react-query]))
+            ;; [app.routes :as routes]))
 
 (defonce root (createRoot (js/document.getElementById "app")))
 (defonce query-client (new react-query/QueryClient))
