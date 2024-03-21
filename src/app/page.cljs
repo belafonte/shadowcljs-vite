@@ -3,7 +3,7 @@
             ["react-dom/client" :refer [createRoot]]
             [react :as react]
             ["@tanstack/react-query" :as react-query]
-            ["../components/ui/button.js" :as button]))
+            ["../components/ui/button" :as button :refer [Button]]))
             ;; [app.routes :as routes]))
 
 (defonce root (createRoot (js/document.getElementById "app")))
@@ -25,7 +25,7 @@
   [:> react-query/QueryClientProvider {:client query-client}
    [:div
     [:h1.text-2xl.text-amber-500 "Tailwind heading"]
-    [:> button/Button {:on-click #(js/alert "Hello")} "Hello Button"]]
+    [:> Button {:on-click #(js/alert "Hello")} "Hello Button"]]
    [:f> example]])
 
 (defn ^:dev/after-load render []
