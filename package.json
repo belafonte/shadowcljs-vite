@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "ui:add": "npm run shadcn-ui -- add",
+    "ui:add": "shadcn-ui -- add label",
     "ui:compile": "babel src/components/ui -d src/components/ui",
     "shadow-dev": "npx shadow-cljs watch app",
     "vite-dev": "vite",
