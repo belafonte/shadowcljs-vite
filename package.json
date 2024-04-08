@@ -8,6 +8,7 @@
     "ui:compile": "babel src/components/ui -d src/components/ui",
     "shadow-dev": "npx shadow-cljs watch app",
     "vite-dev": "vite",
+    "dev": "shadow-cljs -A:dev watch app & vite",
     "vite-build": "vite build",
     "vite-preview": "vite preview"
   },

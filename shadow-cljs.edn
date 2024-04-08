@@ -1,14 +1,12 @@
 ;; shadow-cljs configuration
-{:source-paths
- ["src"]
-
- :dependencies
- [[reagent "1.2.0"]]
+{:deps true
 
  :builds
  {:app
   {:target :browser
-   :modules {:main {:init-fn client.main/init}}
+   :modules {:main {:entries [client.main]
+                    :init-fn client.main/init}}
    :js-options {:js-provider :external
                 :external-index "index.js"
-                :external-index-format :esm}}}}
+                :external-index-format :esm}
+   :devtools {:preloads [preload devtools.preload]}}}}
