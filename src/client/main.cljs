@@ -1,4 +1,4 @@
-(ns app.page
+(ns client.main
   (:require [reagent.core :as r]
             ["react-dom/client" :refer [createRoot]]
             [react :as react]
@@ -28,6 +28,9 @@
    [:div
     [:h1.text-2xl.text-amber-500 "Tailwind heading"]
     [:> Button {:on-click #(js/alert "Hello")} "Hello Button"]
+    [:> Button {:on-click #(js/alert "Hello")} "Hello Button"]
+    [:> Calendar :mode "single"]
+
     [:> Calendar :mode "single"]]
    [:f> example]])
 

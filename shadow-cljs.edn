@@ -8,7 +8,7 @@
  :builds
  {:app
   {:target :browser
-   :modules {:main {:init-fn app.page/init}}
+   :modules {:main {:init-fn client.main/init}}
    :js-options {:js-provider :external
                 :external-index "index.js"
                 :external-index-format :esm}}}}
