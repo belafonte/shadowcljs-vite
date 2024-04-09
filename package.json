@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
+    "cypress": "^13.7.2",
     "postcss": "^8.4.21",
     "shadow-cljs": "2.22.10",
     "tailwindcss": "^3.3.1",
