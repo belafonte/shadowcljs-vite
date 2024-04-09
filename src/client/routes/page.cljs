@@ -1,11 +1,15 @@
 (ns client.routes.page
   (:require
-   [uix.core :as uix :refer [defui $]]
-   [uix.dom]
-   ["react-router-dom" :as router]))
+   ["@@/card" :refer [Card CardContent CardDescription CardHeader CardTitle]]
+   ["react-router-dom" :as router]
+   [uix.core :as uix :refer [$ defui]]
+   [uix.dom]))
 
 (defui main []
   (let [location (router/useLocation)]
-    ($ :div
-       ($ :h1 "Home")
-       ($ :p (str "Current Path: " (.-pathname location))))))
+    ($ Card {:className "w-[380px] mt-12"}
+       ($ CardHeader
+          ($ CardTitle "Page")
+          ($ CardDescription "Sample app"))
+       ($ CardContent
+          ($ :p (str "Current Path: " (.-pathname location)))))))
