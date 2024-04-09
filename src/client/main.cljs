@@ -1,14 +1,15 @@
 (ns client.main
   (:require
-   [uix.core :as uix :refer [defui $]]
-   [uix.dom]
-   ["@@/button" :refer [Button]]
-   ["@@/calendar" :refer [Calendar]]))
+   ["@tanstack/react-query" :refer [QueryClient QueryClientProvider]]
+   [client.routes]
+   [uix.core :as uix :refer [$ defui]]
+   [uix.dom]))
+
+(defonce query-client (new QueryClient))
 
 (defui app []
-  ($ :div
-     ($ Button {:on-click #(js/alert "You Clicked")} "Click Me")
-     ($ Calendar)))
+  ($ QueryClientProvider {:client query-client}
+     ($ client.routes/main)))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "app")))
