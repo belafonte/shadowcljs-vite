@@ -1,14 +1,15 @@
 (ns client.routes.posts.page
   (:require
    ["@@/button" :refer [Button]]
+   ["@@/card" :refer [Card CardContent CardDescription CardHeader CardTitle]]
    ["@@/input" :refer [Input]]
-   ["@@/card" :refer [Card CardContent CardHeader CardFooter CardTitle CardDescription]]
-   ["@@/table" :refer [Table TableBody TableCell TableHead TableHeader TableRow]]
+   ["@@/table" :refer [Table TableBody TableCell TableHead TableHeader
+                       TableRow]]
    ["@tanstack/react-query" :as react-query :refer [useMutation useQuery]]
+   ["lucide-react" :refer [X]]
    ["react-router-dom" :as router]
    [uix.core :as uix :refer [$ defui]]
-   [uix.dom]
-   ["lucide-react" :refer [Delete X]]))
+   [uix.dom]))
 
 (defn fetch []
   (.then (js/fetch "http://localhost:3000/posts")
