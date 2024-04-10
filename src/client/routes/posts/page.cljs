@@ -41,30 +41,39 @@
         remove (useMutation
                 (clj->js {:mutationFn remove-post
                           :onSuccess #(.invalidateQueries qc ["posts"])}))]
-    ($ Card {:className "w-[500px] mt-12"}
-       ($ CardHeader
-          ($ CardTitle "Posts")
-          ($ CardDescription (str "Current Path: " (.-pathname location))))
-       ($ CardContent
-          ($ Table
-             ($ TableHeader
-                ($ TableRow
-                   ($ TableHead {:className "w-[100px]"} "ID")
-                   ($ TableHead "Title")
-                   ($ TableHead {:className "text-right"} "")))
-             ($ TableBody
-                (for [post (-> get .-data)]
-                  ($ TableRow {:key (.-id post)}
-                     ($ TableCell {:className "w-[100px]"} (.-id post))
-                     ($ TableCell (.-title post))
-                     ($ TableCell {:className "text-right"}
-                        ($ Button {:on-click #((-> remove .-mutate) (.-id post))
-                                   :variant "destructive"}
-                           ($ X {:className "h-4 w-4"}))))))))
-       ($ :div {:className "flex w-full items-center space-x-2 p-4"}
-          ($ Input {:type "text"
-                    :placeholder "Title"
-                    :value value
-                    :on-change #(set-value! (.. % -target -value))})
-          ($ Button {:on-click #((-> add .-mutate) (clj->js {:title value}))} "Add")))))
-       ;; ($ ReactQueryDevtools {:initial-is-open true}))))
+
+    (cond
+      (-> get .-isLoading)
+      ($ :div "Loading...") ;; or a spinner
+
+      (-> get .-isError)
+      ($ :div "Error!") ;; or an error message
+
+      (-> get .-isSuccess)
+      ($ Card {:className "w-[500px] mt-12"}
+         ($ CardHeader
+            ($ CardTitle "Posts")
+            ($ CardDescription (str "Current Path: " (.-pathname location))))
+         ($ CardContent
+            ($ Table
+               ($ TableHeader
+                  ($ TableRow
+                     ($ TableHead {:className "w-[100px]"} "ID")
+                     ($ TableHead "Title")
+                     ($ TableHead {:className "text-right"} "")))
+               ($ TableBody
+                  (for [post (-> get .-data)]
+                    ($ TableRow {:key (.-id post)}
+                       ($ TableCell {:className "w-[100px]"} (.-id post))
+                       ($ TableCell (.-title post))
+                       ($ TableCell {:className "text-right"}
+                          ($ Button {:on-click #((-> remove .-mutate) (.-id post))
+                                     :variant "destructive"}
+                             ($ X {:className "h-4 w-4"}))))))))
+         ($ :div {:className "flex w-full items-center space-x-2 p-4"}
+            ($ Input {:type "text"
+                      :placeholder "Title"
+                      :value value
+                      :on-change #(set-value! (.. % -target -value))})
+            ($ Button {:on-click #((-> add .-mutate) (clj->js {:title value}))} "Add"))))))
+         ;; ($ ReactQueryDevtools {:initial-is-open true}))))
