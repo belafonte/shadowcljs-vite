@@ -11,32 +11,36 @@
    [uix.core :as uix :refer [$ defui]]
    [uix.dom]))
 
-(defn fetch []
-  (.then (js/fetch "http://localhost:3000/posts")
-         #(.json %)))
+;; maybe a better approach by the dude
+;; https://github.com/babashka/nbb/blob/main/examples/axios/example.cljs#L5C3-L6C51
+(defn fetch-posts []
+  (-> (js/fetch "http://localhost:3000/posts")
+      (.then #(.json %))))
 
-(defn add [postData]
-  (.then (js/fetch "http://localhost:3000/posts"
-                   (clj->js {:method "POST"
-                             :headers #js {"Content-Type" "application/json"}
-                             :body (js/JSON.stringify postData)}))
-         #(.json %)))
+(defn add-post [postData]
+  (-> (js/fetch "http://localhost:3000/posts"
+                (clj->js {:method "POST"
+                          :headers #js {"Content-Type" "application/json"}
+                          :body (js/JSON.stringify postData)}))
+      (.then #(.json %))))
 
 (defn remove-post [id]
-  (.then (js/fetch (str "http://localhost:3000/posts/" id)
-                   (clj->js {:method "DELETE"}))
-         #(.json %)))
+  (-> (js/fetch (str "http://localhost:3000/posts/" id)
+                (clj->js {:method "DELETE"}))
+      (.then #(.json %))))
 
 (defui main []
   (let [[value set-value!] (uix.core/use-state "")
         location (router/useLocation)
-        queryClient (react-query/useQueryClient)
-        query (useQuery (clj->js {:queryKey ["posts"]
-                                  :queryFn fetch}))
-        mutation (useMutation (clj->js {:mutationFn add
-                                        :onSuccess #(.invalidateQueries queryClient ["posts"])}))
-        remove-mutation (useMutation (clj->js {:mutationFn remove-post
-                                               :onSuccess #(.invalidateQueries queryClient ["posts"])}))]
+        qc (react-query/useQueryClient)
+        get (useQuery (clj->js {:queryKey ["posts"]
+                                :queryFn fetch-posts}))
+        add (useMutation
+             (clj->js {:mutationFn add-post
+                       :onSuccess #(.invalidateQueries qc ["posts"])}))
+        remove (useMutation
+                (clj->js {:mutationFn remove-post
+                          :onSuccess #(.invalidateQueries qc ["posts"])}))]
     ($ Card {:className "w-[500px] mt-12"}
        ($ CardHeader
           ($ CardTitle "Posts")
@@ -49,12 +53,12 @@
                    ($ TableHead "Title")
                    ($ TableHead {:className "text-right"} "")))
              ($ TableBody
-                (for [post (.-data query)]
-                  ($ TableRow
-                     ($ TableCell (.-id post))
+                (for [post (-> get .-data)]
+                  ($ TableRow {:key (.-id post)}
+                     ($ TableCell {:className "w-[100px]"} (.-id post))
                      ($ TableCell (.-title post))
                      ($ TableCell {:className "text-right"}
-                        ($ Button {:on-click #((-> remove-mutation .-mutate) (.-id post))
+                        ($ Button {:on-click #((-> remove .-mutate) (.-id post))
                                    :variant "destructive"}
                            ($ X {:className "h-4 w-4"}))))))))
        ($ :div {:className "flex w-full items-center space-x-2 p-4"}
@@ -62,5 +66,5 @@
                     :placeholder "Title"
                     :value value
                     :on-change #(set-value! (.. % -target -value))})
-          ($ Button {:on-click #((-> mutation .-mutate) (clj->js {:title value}))} "Add")))))
+          ($ Button {:on-click #((-> add .-mutate) (clj->js {:title value}))} "Add")))))
        ;; ($ ReactQueryDevtools {:initial-is-open true}))))
