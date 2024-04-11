@@ -53,7 +53,7 @@
       ($ Card {:className "w-[500px] mt-12"}
          ($ CardHeader
             ($ CardTitle "Posts")
-            ($ CardDescription (str "Current Path: " (.-pathname location))))
+            ($ CardDescription (str "Current Path: " (-> location .-pathname))))
          ($ CardContent
             ($ Table
                ($ TableHeader
@@ -63,9 +63,9 @@
                      ($ TableHead {:className "text-right"} "")))
                ($ TableBody
                   (for [post (-> get .-data)]
-                    ($ TableRow {:key (.-id post)}
-                       ($ TableCell {:className "w-[100px]"} (.-id post))
-                       ($ TableCell (.-title post))
+                    ($ TableRow {:key (-> post .-id)}
+                       ($ TableCell {:className "w-[100px]"} (-> post .-id))
+                       ($ TableCell (-> post .-title))
                        ($ TableCell {:className "text-right"}
                           ($ Button {:on-click #((-> remove .-mutate) (.-id post))
                                      :variant "destructive"}
