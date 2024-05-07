@@ -1,6 +1,7 @@
 (ns client.main
   (:require
    ["@tanstack/react-query" :refer [QueryClient QueryClientProvider]]
+   ["@/i18n.js"]
    [client.routes]
    [uix.core :as uix :refer [$ defui]]
    [uix.dom]))
