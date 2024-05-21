@@ -34,9 +34,15 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.3.0",
     "autoprefixer": "^10.4.14",
     "cypress": "^13.7.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.3.0",
     "postcss": "^8.4.21",
+    "prettier": "3.2.5",
     "shadow-cljs": "2.22.10",
     "tailwindcss": "^3.3.1",
     "vite": "^5.1.3"
