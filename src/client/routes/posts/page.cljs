@@ -18,11 +18,17 @@
       (.then #(.json %))))
 
 (defn add-post [postData]
-  (-> (js/fetch "http://localhost:3000/posts"
-                (clj->js {:method "POST"
-                          :headers #js {"Content-Type" "application/json"}
-                          :body (js/JSON.stringify postData)}))
-      (.then #(.json %))))
+  (try
+    (.. (js/fetch "http://localhost:3000/postsasdf"
+                  (clj->js {:method "POST"
+                            :headers #js {"Content-Type" "application/json"}
+                            :body (js/JSON.stringify postData)}))
+        (then (fn [response]
+                (if (.. response -ok)
+                  (.. response json)
+                  (throw (js/Error. (str "HTTP error: " (.. response -status))))))))
+    (catch :default e
+      (js/console.debug (str "An error occurred: " (.. e -message))))))
 
 (defn remove-post [id]
   (-> (js/fetch (str "http://localhost:3000/posts/" id)
@@ -37,19 +43,21 @@
                                 :queryFn fetch-posts}))
         add (useMutation
              (clj->js {:mutationFn add-post
+                       :onError (fn [error] (js/console.debug "mutation failed" error))
+                       :onSettled #(js/console.debug "settled")
                        :onSuccess #(.invalidateQueries qc ["posts"])}))
         remove (useMutation
                 (clj->js {:mutationFn remove-post
                           :onSuccess #(.invalidateQueries qc ["posts"])}))]
 
     (cond
-      (-> get .-isLoading)
+      (.. get -isLoading)
       ($ :div "Loading...") ;; or a spinner
 
-      (-> get .-isError)
+      (.. get -isError)
       ($ :div "Error!") ;; or an error message
 
-      (-> get .-isSuccess)
+      (.. get -isSuccess)
       ($ Card {:className "w-[500px] mt-12"}
          ($ CardHeader
             ($ CardTitle "Posts")
@@ -70,10 +78,21 @@
                           ($ Button {:on-click #((-> remove .-mutate) (.-id post))
                                      :variant "destructive"}
                              ($ X {:className "h-4 w-4"}))))))))
+
+         (cond
+           (.. add -isPending)
+           ($ :div "Pending")
+
+           (.. add -isSuccess)
+           ($ :div "Post added!")
+
+           (.. add -isError)
+           ($ :div "Error adding post!"))
          ($ :div {:className "flex w-full items-center space-x-2 p-4"}
             ($ Input {:type "text"
                       :placeholder "Title"
                       :value value
                       :on-change #(set-value! (.. % -target -value))})
-            ($ Button {:on-click #((-> add .-mutate) (clj->js {:title value}))} "Add"))))))
+            ($ Button {:on-click #(.. add (mutate (clj->js {:title value})))}
+               "Add"))))))
          ;; ($ ReactQueryDevtools {:initial-is-open true}))))
