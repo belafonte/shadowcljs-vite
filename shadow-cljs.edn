@@ -7,6 +7,6 @@
    :modules {:main {:entries [client.main]
                     :init-fn client.main/init}}
    :js-options {:js-provider :external
-                :external-index "index.js"
+                :external-index "public/js/imports.js"
                 :external-index-format :esm}
    :devtools {:preloads [preload devtools.preload]}}}}
